@@ -1,7 +1,6 @@
 package com.cousteau;
 
 import java.lang.reflect.Field;
-import java.util.HashSet;
 import java.util.Set;
 
 import javax.mail.Address;
@@ -10,6 +9,7 @@ import javax.mail.internet.MimeMessage.RecipientType;
 
 import com.cousteau.entities.AddressDetails;
 import com.orientechnologies.orient.core.exception.OTransactionException;
+import com.tinkerpop.blueprints.Edge;
 import com.tinkerpop.blueprints.Parameter;
 import com.tinkerpop.blueprints.Vertex;
 import com.tinkerpop.blueprints.impls.orient.OrientGraph;
@@ -103,7 +103,7 @@ public class CorreoGraph {
 				
 				//FROM section
 				Address[] f_addr = msg.getFrom();
-				if (f_addr == null || f_addr.length <= 0) {
+				if (f_addr == null || f_addr.length == 0) {
 					_logger.error("No sender info for the message!!");
 					return;
 				}
@@ -116,8 +116,18 @@ public class CorreoGraph {
 				
 				//TO section
 				Address[] rec_addr = msg.getRecipients(RecipientType.TO);
-				
-				
+				if (rec_addr == null || rec_addr.length == 0) {
+					_logger.debug("No TO in email");
+				} else {
+					for (Address addr : rec_addr) {
+						AddressDetails t_ad = new AddressDetails(addr);
+						
+						Vertex v_to = findOrCreateAddress(t_ad, false);
+						
+						Edge sendsTo = graph.addEdge(null, v_from, v_to, "emails_to");
+						sendsTo.setProperty("timestamp", msg.getSentDate().toString());
+					}
+				}
 			
 				graph.commit();
 				break;
