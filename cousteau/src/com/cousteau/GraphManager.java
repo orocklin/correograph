@@ -27,6 +27,7 @@ public class GraphManager implements Runnable {
 			if (transport != null) { 
 				while(!me.isInterrupted()) {
 					Message msg = transport.take();
+					_logger.debug("got msg from transport. subj: " + msg.getSubject());
 					cg.addMessage(msg);
 				}
 			}
