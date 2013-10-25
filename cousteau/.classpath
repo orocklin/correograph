@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="test"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0/lib/mail.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0/lib/mireka.jar" sourcepath="/mireka/src"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0/lib/slf4j-api-1.6.4.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/kafka_2.8.0-0.8.0-beta1.jar" sourcepath="C:/api_lib/kafka-0.8.0-beta1-src/core/src"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0-src/lib/runtime/subethasmtp-UNVERSIONED.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/scala-library.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0-src/lib/runtime/ivy/logback-classic-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/mireka-4.0-src/lib/runtime/ivy/logback-core-1.0.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/log4j-1.2.15.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/jopt-simple-3.2.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/metrics-annotation-2.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/metrics-core-2.2.0.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/snappy-java-1.0.4.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/zkclient-0.3.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/kafka_2.8.0-0.8.0-beta1/libs/zookeeper-3.3.4.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/orient-commons-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/orientdb-core-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/blueprints-core-2.5.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/blueprints-orient-graph-2.5.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/orientdb-client-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/api_lib/orientdb-graphed-1.5.1/lib/orientdb-enterprise-1.5.1.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
