@@ -20,12 +20,14 @@ public class GraphLoaderMain {
 		grabber.createSession();
 		grabber.traverseFolder();
 		grabber.disconnect();
-		
+				
         Scanner scan = new Scanner(System.in);
         
         System.out.println("Running... type 'quit' to exit: ");
-        
-        while (!"quit".equalsIgnoreCase(scan.next()));
+        String line = null;
+        while (!"quit".equalsIgnoreCase(line = scan.nextLine())) {
+        	System.out.println("wrong command: " + line);
+        }
         
         scan.close();
         gm.stop();

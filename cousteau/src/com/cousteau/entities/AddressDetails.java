@@ -13,6 +13,8 @@ public class AddressDetails {
 	private String name;
 	
 	private String email;
+	
+	private String domain;
 
 	public String getName() {
 		return name;
@@ -25,18 +27,28 @@ public class AddressDetails {
 	public String getEmail() {
 		return email;
 	}
+	
+	public String getDomain() {
+		return domain;
+	}
 
 	public void setEmail(String email) {
 		this.email = email;
+		if (email != null && email.length() > 1) {
+			int idx = email.indexOf('@') + 1;
+			if (idx > 0 && idx < email.length())
+				domain = email.substring(idx);
+		}
 	}
 	
+		
 	public AddressDetails() {
 	}
 	
 	public AddressDetails(Address addr) {
 		if (addr != null) {
 			try {
-				if (!"RFC 822".equalsIgnoreCase(addr.getType())) {
+				if (!"rfc822".equalsIgnoreCase(addr.getType())) {
 					_logger.warn("Parsing might fail for address by the spec " + addr.getType() + " - RFC 822 is expected");
 				}
 				
@@ -44,7 +56,7 @@ public class AddressDetails {
 				int eadr_far_idx = full_addr.lastIndexOf('>');
 				if (eadr_far_idx < 0) {
 					name = null;
-					email = full_addr.trim(); //We're assuming correctness of the address based on the source being javax.mail.Address class
+					setEmail(full_addr.trim()); //We're assuming correctness of the address based on the source being javax.mail.Address class
 				} else {
 					int eadr_near_idx = full_addr.lastIndexOf('<');
 					if (eadr_near_idx < 0) {
@@ -54,7 +66,7 @@ public class AddressDetails {
 					}
 					
 					name = full_addr.substring(0, eadr_near_idx).trim();
-					email = full_addr.substring(eadr_near_idx + 1, eadr_far_idx);
+					setEmail(full_addr.substring(eadr_near_idx + 1, eadr_far_idx));
 				}
 				
 			} catch (Exception e) {

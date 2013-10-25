@@ -22,7 +22,13 @@ public class GraphManager implements Runnable {
 	public void run() {
 		CorreoGraph cg = null;
 		try {
+			_logger.debug("before graph");
 			cg = CorreoGraph.getInstance();
+			_logger.debug("afta-graph");
+			if (cg == null) {
+				System.out.println("Can't initialize the graph");
+				System.exit(1);
+			}
 
 			if (transport != null) { 
 				while(!me.isInterrupted()) {
@@ -35,7 +41,10 @@ public class GraphManager implements Runnable {
 		} catch (Exception e) {
 			_logger.error("Exiting from GraphManager thread", e);
 		} finally {
-			cg.shutdown();
+			if (cg != null)
+				cg.shutdown();
+			else
+				_logger.error("Graph was never initialized!");
 		}
 	}
 	

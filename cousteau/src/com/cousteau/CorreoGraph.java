@@ -22,7 +22,7 @@ public class CorreoGraph {
 	
 	private static final Logger _logger = LoggerFactory.getLogger(CorreoGraph.class);
 	
-	private static volatile String graphDb = "local:C:\\api_lib\\orientdb-graphed-1.5.1\\databases\\correo";
+	private static volatile String graphDb = "remote:localhost/maildump";
 	
 	private final OrientGraph graph;
 	
@@ -32,12 +32,14 @@ public class CorreoGraph {
 	private static final String KEY_ADDRESS_NAME = "addr_name";
 	private static final String KEY_ADDRESS_EMAIL_UNIQE = "addr_email";
 	
+	private static final String LBL_LABEL = "Label";
 
 	private static final class GraphHolder {
 		private static final CorreoGraph me = new CorreoGraph(); 
 	}
 	
 	private CorreoGraph() {
+		_logger.info("Connecting to database: " + graphDb);
 		graph = new OrientGraph(graphDb);
 		indexSetup();
 	}
@@ -53,7 +55,8 @@ public class CorreoGraph {
 	
 	
 	public final void shutdown() {
-		graph.shutdown();
+		if (graph != null)
+			graph.shutdown();
 	}
 	
 	private void indexSetup() {
@@ -126,6 +129,7 @@ public class CorreoGraph {
 						
 						Edge sendsTo = graph.addEdge(null, v_from, v_to, "emails_to");
 						sendsTo.setProperty("timestamp", msg.getSentDate().toString());
+						
 					}
 				}
 			
@@ -155,7 +159,8 @@ public class CorreoGraph {
 		if (res == null || !res.iterator().hasNext()) {
 			Vertex addr = graph.addVertex(null);
 				addr.setProperty(KEY_ADDRESS_EMAIL_UNIQE, ad.getEmail());
-				addr.setProperty(KEY_ADDRESS_NAME, ad.getName());
+				if (ad.getName() != null)
+					addr.setProperty(KEY_ADDRESS_NAME, ad.getName());
 				
 			if (commit)
 				graph.commit();
@@ -164,7 +169,13 @@ public class CorreoGraph {
 		} else {
 			Vertex theOne = res.iterator().next();
 			if (res.iterator().hasNext()) {
-				_logger.warn("Duplicate vertex detected for " + ad.toString());
+				Vertex theTwo = res.iterator().next();
+				_logger.warn("Duplicate vertex detected for " + ad.toString() + " as " + theTwo.getProperty(KEY_ADDRESS_EMAIL_UNIQE));
+			}
+			if (ad.getName() != null && theOne.getProperty(KEY_ADDRESS_NAME) == null) {
+				theOne.setProperty(KEY_ADDRESS_NAME, ad.getName());
+				if (commit)
+					graph.commit();
 			}
 			return theOne;
 		}
